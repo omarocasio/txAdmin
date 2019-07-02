@@ -35,6 +35,7 @@ module.exports = class DiscordBot {
             // chan.send('Hello, chat!');
         });
         this.client.on('message', this.handleMessage.bind(this));
+        this.client.on('message', this.handleCommandMessage.bind(this));
         this.client.on('error', (error) => {
             logError(error.message, context);
         });
@@ -50,10 +51,39 @@ module.exports = class DiscordBot {
             process.exit();
         }
     }
+
+    //===============================================================
+    
+    async handleCommandMessage(message){
+        if (!message.content.startsWith(this.config.prefix)) return;
+
+        const withoutPrefix = message.content.slice(this.config.prefix.length);
+        const split = withoutPrefix.split(/ +/);
+        const command = split[0];
+        const args = split.slice(1);
+
+
+        if (command === 'test') {
+            if (args[0]) {
+                const user = message.mentions.users.first() || message.guild.members.get(args[0]);
+                
+                if(!user) {
+                    return message.reply('Error fool')
+                }
+                return message.channel.send(`You just did a test to: `, user.username);
+            }
+            return message.channel.send(`${message.author.username}, tested themselves!`);
+        }else if (command === 'serverStatus'){
+            
+        }else if (command === '') {
+
+        }
+    }
     
 
     //================================================================
     async handleMessage(message){
+        if (message.content.startsWith(this.config.prefix)) return;
         if(message.author.bot) return;
         let out = '';
 
@@ -83,6 +113,13 @@ module.exports = class DiscordBot {
             out.setColor(0x4DEEEA);
             out.setDescription(`Checkout the project:\n Forum: https://forum.fivem.net/t/530475\n Discord: https://discord.gg/f3TsfvD`); 
 
+
+        }else if(message.content === '/server') {
+            out = new Discord.RichEmbed();
+            out.setTitle(`Server name: ${message.guild.name}`)
+            out.setColor(0x4DEEEA);
+            out.setDescription(`**Total members:** ${message.guild.memberCount}`)
+        
         }else{
             let msg = this.messages.find((staticMessage) => {return message.content.startsWith(staticMessage.trigger)});
             if(!msg) return;

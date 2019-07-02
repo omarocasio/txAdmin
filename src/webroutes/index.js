@@ -7,3 +7,5 @@ exports.getDashboard = require('./getDashboard.js');
 exports.getFullReport = require('./getFullReport.js');
 exports.getPlayerData = require('./getPlayerData.js');
 exports.getStatus = require('./getStatus.js');
+exports.getBannedList = require('./getBannedList.js');
+exports.getLiveMap = require('./getLiveMap.js');

@@ -29,6 +29,7 @@ module.exports = async function action(res, req) {
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button onclick="messagePlayer(${id})" type="button" class="btn btn-secondary"><i class="icon-speech"></i> Send Message</button>
                 <button onclick="kickPlayer(${id})" type="button" class="btn btn-danger"><i class="icon-ban"></i> Kick</button>
+                <button onclick="banPlayer(${id})" type="button" class="btn btn-danger"><i class="icon-ban"></i> Ban</button>
             `
         }
         if(player.steam) out.buttons += `<a href="${player.steam}" target="_blank" class="btn btn-info"><i class="icon-user"></i> Steam</a>`;

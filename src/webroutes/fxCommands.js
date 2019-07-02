@@ -81,6 +81,12 @@ module.exports = async function action(res, req) {
         let toResp = await globals.fxRunner.srvCmdBuffer(cmd);
         return sendAlertOutput(res, toResp);
 
+    }else if(action == 'ban_player'){
+        let cmd = `txaBanID ${parameter}`;
+        webUtils.appendLog(req, cmd, context);
+        let toResp = await globals.fxRunner.srvCmdBuffer(cmd);
+        return sendAlertOutput(res, toResp);
+
     }else{
         webUtils.appendLog(req, 'Unknown action!', context);
         return sendAlertOutput(res, 'Unknown action!');

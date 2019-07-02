@@ -137,6 +137,34 @@ function kickPlayer(id) {
 }
 
 
+function banPlayer(id) {
+    $('#modPlayerInfo').modal('hide');
+    var notify = $.notify({ message: '<p class="text-center">Executing Command...</p>'}, {});
+
+    let data = {
+        action: 'ban_player',
+        parameter: id
+    }
+    $.ajax({
+        type: "POST",
+        url: '/fxCommands',
+        timeout: 2000,
+        data: data,
+        // dataType: 'json',
+        success: function (data) {
+            notify.update('progress', 0);
+            notify.update('type', 'warning');
+            notify.update('message', data);
+        },
+        error: function (xmlhttprequest, textstatus, message) {
+            notify.update('progress', 0);
+            notify.update('type', 'danger');
+            notify.update('message', message);
+        }
+    });
+}
+
+
 
 $(document).ready(function() {
     $.notifyDefaults({

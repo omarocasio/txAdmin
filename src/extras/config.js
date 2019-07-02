@@ -100,6 +100,7 @@ try {
         messagesFilePath: configFile.discordBot.messagesFilePath || 'data/messages.json',
         refreshInterval: parseInt(configFile.discordBot.refreshInterval) || 15000, //not in template
         statusCommand: configFile.discordBot.statusCommand || "/status",
+        prefix: configFile.discordBot.prefix || "!",
     };
     cfg.fxRunner = {
         buildPath: configFile.fxRunner.buildPath || fatalRequired('fxRunner.buildPath'),
