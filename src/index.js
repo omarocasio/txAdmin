@@ -1,7 +1,7 @@
 //Requires
 const { dir, log, logOk, logWarn, logError, cleanTerminal } = require('./extras/console');
 const testUtils = require('./extras/testUtils');
-
+const sqlite3 = require('sqlite3').verbose();
 
 //==============================================================
 //FIXME: I should be using dependency injection or something

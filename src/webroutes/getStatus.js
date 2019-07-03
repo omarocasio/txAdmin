@@ -5,6 +5,7 @@ const { dir, log, logOk, logWarn, logError, cleanTerminal } = require('../extras
 const context = 'WebServer:getStatus';
 
 
+
 /**
  * Getter for all the log/server/process data
  * @param {object} res
@@ -15,7 +16,8 @@ module.exports = async function action(res, req) {
         meta: prepareMetaData(),
         host: prepareHostData(),
         status: prepareServerStatus(),
-        players: preparePlayersData()
+        players: preparePlayersData(),
+        banlist: prepareBanList()
     })
 };
 
@@ -143,6 +145,51 @@ function preparePlayersData() {
     });
     
     return out;
+}
+
+
+
+//==============================================================
+/**
+ * Returns Sqlite DB for all Bans
+ */
+
+function prepareBanList() {
+    try {
+        let db = new sqlite3.Database('/data/txBanList.db', (err) => {
+            if (err) {
+                throw console.error(err.message);
+            }
+            dir('Connected to the DataBase');
+        });
+    } catch (err) {
+        dir('Error Connecting',err);
+    }
+
+    let sql = `SELECT BanListId id, Name name FROM BannedList WHERE PlaylistId = ?`;
+    let playerlist = 1;
+    
+    try {
+        db.get(sql, [playerlist], (err, row) => {
+            if (err) {
+                throw logError(err.message);
+            }
+    
+            return row
+            ? logError(row.id, row.name)
+            : logError(`No players found..`);
+        })
+
+    } catch (err) {
+        logError('Error Connecting',err);
+    }
+
+    db.close((err) => {
+        if (err) {
+            logError(err.message)
+        }
+        logError("Closed database connection.")
+    })
 }
 
 
