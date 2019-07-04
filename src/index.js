@@ -9,6 +9,7 @@ globals = {
     monitor: null,
     logger: null,
     discordBot: null,
+    sqlite3: null,
     authenticator: null,
     webServer: null,
     webConsole: null,
@@ -62,7 +63,7 @@ class txAdmin {
         this.startDiscordBot(localConfig.discordBot).catch((err) => {
             HandleFatalError(err, 'DiscordBot');
         });
-        this.startDiscordBot(localConfig.sqlite3).catch((err) => {
+        this.startSqlite3(localConfig.sqlite3).catch((err) => {
             HandleFatalError(err, 'Sqlite3');
         });
         this.startFXServer(localConfig.fxRunner).catch((err) => {
@@ -97,6 +98,12 @@ class txAdmin {
     async startDiscordBot(config){
         const DiscordBot = require('./components/discordBot')
         globals.discordBot = new DiscordBot(config);
+    }
+
+    //==============================================================
+    async startSqlite3(config){
+        const Sqlite3 = require('./components/sqlite3')
+        globals.sqlite3 = new Sqlite3(config);
     }
 
     //==============================================================

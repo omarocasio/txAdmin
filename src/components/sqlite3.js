@@ -1,24 +1,21 @@
 //Requires
 const fs = require('fs');
+const sqlite3 = require('sqlite3').verbose()
 const { dir, log, logOk, logWarn, logError, cleanTerminal } = require('../extras/console');
 const context = 'Sqlite3';
-const sqlite3 = require('sqlite3').verbose()
+
 
 
 module.exports = class Sqlite3 {
-
     constructor(config) {
         this.config = config;
-        if(!this.config.enabled){
-            logOk('::Disabled by the config file.', context);
-            return;
-        }    
+           
         logOk('::Started', context);
-        this.db = new sqlite3.Database('./txAdmin', (err) => {
+        this.db = new sqlite3.Database('txAdmin.db', (err) => {
             if(err) {
                 logError(err.message)
             }
-            logOk('Connect to DB')
+            logOk('::Connected: Connect to txAdmin Database')
         })
 
        //this.setupConnection();
