@@ -105,6 +105,7 @@ try {
     };
     cfg.sqlite3 = {
         enabled: (configFile.sqlite3.enabled === 'true' || configFile.sqlite3.enabled === true), // is in template
+        dbPath: (configFile.sqlite3.dbPath || 'data/txAdmin.db'),
         refreshInterval: parseInt(configFile.sqlite3.refreshInterval) || 15000, // not in template
     };
     cfg.fxRunner = {

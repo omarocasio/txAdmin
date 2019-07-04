@@ -9,28 +9,30 @@ const context = 'Sqlite3';
 module.exports = class Sqlite3 {
     constructor(config) {
         this.config = config;
-           
         logOk('::Started', context);
-        this.db = new sqlite3.Database('txAdmin.db', (err) => {
+        this.db = new sqlite3.Database(this.config.dbPath, (err) => {
             if(err) {
                 logError(err.message)
             }
             logOk('::Connected: Connect to txAdmin Database')
         })
 
-       //this.setupConnection();
-        //this.setupConnection();
 
         //Cron Function
         setInterval(() => {
-            //this.setupConnection();
+            this.setupConnection();
         }, this.config.refreshInterval);
         
     }
 
 
     async setupConnection() {
-        
+        this.db = new sqlite3.Database(this.config.dbPath, (err) => {
+            if(err) {
+                logError(err.message)
+            }
+            logOk('::Connected: Connected to txAdmin Database')
+        })
     }
 
 }
