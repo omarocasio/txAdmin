@@ -53,6 +53,7 @@ let cfg = {
     webServer: null,
     webConsole: null,
     discordBot: null,
+    sqlite3: null,
     fxRunner: null,
 }
 //Read config and Set defaults
@@ -102,6 +103,10 @@ try {
         statusCommand: configFile.discordBot.statusCommand || "/status",
         prefix: configFile.discordBot.prefix || "!",
     };
+    cfg.sqlite3 = {
+        enabled: (configFile.sqlite3.enabled === 'true' || configFile.sqlite3.enabled === true), // is in template
+        refreshInterval: parseInt(configFile.sqlite3.refreshInterval) || 15000, // not in template
+    };
     cfg.fxRunner = {
         buildPath: configFile.fxRunner.buildPath || fatalRequired('fxRunner.buildPath'),
         basePath: configFile.fxRunner.basePath || fatalRequired('fxRunner.basePath'),
@@ -126,5 +131,6 @@ module.exports = {
     webServer: Object.freeze(cfg.webServer),
     webConsole: Object.freeze(cfg.webConsole),
     discordBot: Object.freeze(cfg.discordBot),
+    sqlite3: Object.freeze(cfg.sqlite3),
     fxRunner: Object.freeze(cfg.fxRunner),
 }

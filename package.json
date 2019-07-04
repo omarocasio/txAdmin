@@ -47,7 +47,6 @@
     "pretty-ms": "^5.0.0",
     "semver": "^6.1.1",
     "socket.io": "^2.2.0",
-    "sqlite3": "^4.0.9",
     "squirrelly": "^7.1.1",
     "stream-snitch": "0.0.3",
     "xss": "^1.0.6"

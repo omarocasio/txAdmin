@@ -1,7 +1,7 @@
 //Requires
 const { dir, log, logOk, logWarn, logError, cleanTerminal } = require('./extras/console');
 const testUtils = require('./extras/testUtils');
-const sqlite3 = require('sqlite3').verbose();
+
 
 //==============================================================
 //FIXME: I should be using dependency injection or something
@@ -61,6 +61,9 @@ class txAdmin {
         });
         this.startDiscordBot(localConfig.discordBot).catch((err) => {
             HandleFatalError(err, 'DiscordBot');
+        });
+        this.startDiscordBot(localConfig.sqlite3).catch((err) => {
+            HandleFatalError(err, 'Sqlite3');
         });
         this.startFXServer(localConfig.fxRunner).catch((err) => {
             HandleFatalError(err, 'FXServer');

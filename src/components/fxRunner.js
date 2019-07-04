@@ -6,8 +6,7 @@ const StreamSnitch = require('stream-snitch');
 const sleep = require('util').promisify(setTimeout);
 const { dir, log, logOk, logWarn, logError, cleanTerminal } = require('../extras/console');
 const context = 'FXRunner';
-const sqlite3 = require('sqlite3').verbose();
-const contextSql = 'Sqlite3';
+
 
 module.exports = class FXRunner {
     constructor(config) {
@@ -300,26 +299,3 @@ module.exports = class FXRunner {
 
 
 } //Fim FXRunner()
-
-
-module.exports = class Sqlite {
-
-    constructor(config) {
-        logOk('::Started', contextSql);
-        this.config = config;
-        this.fxChild = null;
-        this.spawnVariables = null;
-        this.outData = '';
-        this.enableBuffer = false;
-        this.tsChildStarted = null;
-        this.setupVariables();
-
-        //The setTimeout is not strictly necessary, but it's nice to have other errors in the top before fxserver starts.
-        if(config.autostart){
-            setTimeout(() => {
-                this.spawnServer();
-            }, config.autostartDelay * 1000);
-        }
-    }
-
-}
