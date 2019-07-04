@@ -10,15 +10,8 @@ module.exports = class Sqlite3 {
     constructor(config) {
         this.config = config;
         logOk('::Started', context);
-        this.db = new sqlite3.Database(this.config.dbPath, (err) => {
-            if(err) {
-                logError(err.message)
-            }
-            logOk('::Connected: Connect to txAdmin Database')
-        })
 
-
-        //Cron Function
+        //Cron Function - might want to change as connecting only once? Or when quering? 
         setInterval(() => {
             this.setupConnection();
         }, this.config.refreshInterval);
@@ -29,10 +22,30 @@ module.exports = class Sqlite3 {
     async setupConnection() {
         this.db = new sqlite3.Database(this.config.dbPath, (err) => {
             if(err) {
-                logError(err.message)
+                logError('::Error: ',err.message)
             }
             logOk('::Connected: Connected to txAdmin Database')
         })
+    }
+
+    //================================================================
+    /**
+     * Pipe a string into Sqlite to query
+     * @param {string} command 
+     * @param {int} int
+     */
+    sqlCmd(command){
+        if(typeof command !== 'string' || typeof int !== Int16Array) throw new Error('Expected String!');
+        try {
+            
+            return success;
+        } catch (error) {
+            if(globals.config.verbose){
+                logError('Error writing to fxChild.stdin', context);
+                dir(error);
+            }
+            return false;
+        }
     }
 
 }
