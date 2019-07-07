@@ -30,20 +30,43 @@ module.exports = class Sqlite3 {
 
     //================================================================
     /**
-     * Pipe a string into Sqlite to query
+     * Pipe a string into Sqlite to query for banning 
      * @param {string} command 
      * @param {int} int
      */
-    sqlCmd(command){
-        if(typeof command !== 'string' || typeof int !== Int16Array) throw new Error('Expected String!');
+    sqlBan(command){
+        if(typeof command !== 'string' || typeof int !== Int16Array) throw new Error('Expected String or a Number!');
         try {
-            
+            let sql = `SELECT Username username,
+                                `
             return success;
         } catch (error) {
-            if(globals.config.verbose){
-                logError('Error writing to fxChild.stdin', context);
-                dir(error);
-            }
+            
+            return false;
+        }
+    }
+
+
+    //================================================================
+    /**
+     * Pipe a string into Sqlite to query for unbanning 
+     * @param {*} command 
+     */
+    sqlUnBan(command){
+        if(typeof command !== 'string') throw new Error('Expected String or a Number!');
+        try {
+            let sql = `SELECT Username name,
+                              SteamID steamID,
+                        FROM BannedList`;
+            this.db.get(sql, (error) => {
+                if(!error) {
+
+                }
+
+            
+            })
+            return true;
+        } catch (error) {
             return false;
         }
     }
